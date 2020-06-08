@@ -19,3 +19,5 @@ string convertHexToDec();
 //Chuyển đổi số QInt từ hệ thập phân sang hệ thập lục phân
 string convertDecToHex();
 
+//
+
