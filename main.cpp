@@ -25,14 +25,42 @@ string IntToStr(int num){
     reverse(result.begin(),result.end());
     return result!=""?result:"0";
 }
+void ConvertToBu2(string& s){
+    for(int i=0;i<s.length();i++){
+        s[i]=(s[i]=='1'?'0':'1');
+    }
+    int tmp=1;
+    for(int i=s.length()-1;i>=0 && tmp==1;i--){
+        if(s[i]=='1')
+        {
+            s[i]='0';
+            tmp=1;
+        }
+        else{
+            s[i]='1';
+            tmp=0;
+        }
+    }
+
+}
 string ConvertDecimalToBin(string s){
     string result="";
+    bool isNegative=false;
+    if(s[0]=='-'){
+        isNegative= true;
+        s=s.substr(1);
+    }
+    
     while(s!="0"){
         int tmp=int(s[s.length()-1]-'0');
         result+=tmp%2?"1":"0";
         s=Devide2(s);
     }
-    reverse(result.begin(),result.end());
+    reverse(result.begin(),result.end());   
+
+    if(isNegative){
+        ConvertToBu2(result);
+    }
 
     return result;
 }
