@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <iostream>
-#include <string.h>
+#include <string>
 using namespace std;
 class QInt
 {
@@ -15,5 +15,23 @@ public:
 
 	//Chuyển QInt hệ thập lục phân sang hệ nhị phân
 	string convertHexToBin(string StrHex);
+
+	//Dịch phải
+	//friend QInt operator>>(QInt &a, int SoBitDichPhai);
+
+	//Dịch phải
+	string shiftRight(string StrBin, int SoBitDich);
+
+	//Dịch trái
+	string shiftLeft(string StrBin, int SoBitDich);
+
+	//Dùng trong phép nhân.
+	string DiChuyenSangTrai(string StrBin, int SoBitDich);
+
+	string multiplyQInt(string SrtBin, string StrBin);
+
+	//QInt& operator+(const QInt &a);
+
+	string cong(string a, string b);
 };
 
