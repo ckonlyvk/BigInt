@@ -268,10 +268,41 @@ string AND(string s1, string s2)
 	return s;
 }
 
+string OR(string s1, string s2)
+{
+	string s;
+	string s3;
+	int length = s1.length();
+	if (s1.length() > s2.length())
+	{
+		length = s2.length();
+		s3 = s1.substr(0, s1.length() - length);
+		s1 = s1.substr(s1.length() - length, length);
+	}
+	else if (s1.length() < s2.length())
+	{
+		length = s1.length();
+		s3 = s1.substr(0, s1.length() - length);
+		s2 = s2.substr(s2.length() - length, length);
+	}
+	for (int i = 0; i < length; i++)
+	{
+		if (s1[i] - '0' == 1 || s2[i] - '0' == 1)
+		{
+			s.push_back('1');
+		}
+		else
+		{
+			s.push_back('0');
+		}
+	}
+	return s3 + s;
+}
+
 int main() {
-	string s = "110010111101";
-	string s1 = "10110110";
-	cout << AND(s, s1);
+	string s = "00111100";
+	string s1 = "00001101";
+	cout << OR(s, s1);
 	
 	system("pause");
 	return 0;
