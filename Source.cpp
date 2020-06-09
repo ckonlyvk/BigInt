@@ -13,6 +13,21 @@ int *CreateNewArrange(int *x,int count)
 	y[count] = 0;
 	return y;
 }
+string Check_0_in_head(string s)
+{
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (s[i] - '0' == 1)
+		{
+			if (i != 0)
+			{
+				s = s.substr(i, s.length() - i);
+			}
+			break;
+		}
+	}
+	return s;
+}
 string ConvertToDecimal(string s) 
 {
 	int dau = s[0] - '0';
@@ -137,6 +152,7 @@ string ConvertToDecimal(string s)
 			str.push_back(str1[i]);
 		}
 	}
+	str = Check_0_in_head(str);
 	return str;
 }
 
@@ -269,6 +285,7 @@ string cong(string a, string b)
 	{
 		str.push_back(c[i]);
 	}
+	str = Check_0_in_head(str);
 	return str;
 }
 
@@ -297,6 +314,7 @@ string AND(string s1, string s2)
 			s.push_back('0');
 		}
 	}
+	s = Check_0_in_head(s);
 	return s;
 }
 
@@ -328,7 +346,8 @@ string OR(string s1, string s2)
 			s.push_back('0');
 		}
 	}
-	return s3 + s;
+	s = Check_0_in_head(s3 + s);
+	return s;
 }
 
 string XOR(string s1, string s2)
@@ -359,7 +378,8 @@ string XOR(string s1, string s2)
 			s.push_back('1');
 		}
 	}
-	return s3 + s;
+	s = Check_0_in_head(s3 + s);
+	return s;
 }
 
 string NOT(string s)
@@ -375,12 +395,33 @@ string NOT(string s)
 			s[i] = '1';
 		}
 	}
+	s = Check_0_in_head(s);
 	return s;
 }
-int main() {
-	string s = "100111100";
-	string s1 = "00001101";
-	cout << NOT(s);
+
+string ROL(string s)
+{
+	char x = s[0];
+	s = s.substr(1, s.length() - 1);
+	s.push_back(x);
+	s = Check_0_in_head(s);
+	return s;
+}
+
+string ROR(string s)
+{
+	string s1;
+	s1.push_back(s[s.length() - 1]);
+	s.pop_back();
+	s = s1 + s;
+	s = Check_0_in_head(s);
+	return s;
+}
+int main() 
+{
+	string s = "101";
+	string s1 = "1101";
+	cout << AND(s,s1);
 	
 	system("pause");
 	return 0;
