@@ -189,6 +189,34 @@ string cong(string a, string b)
 			}
 			c.push_back(char(num + 48));
 		}
+		if (memo == 1 && c.length() < 128)
+		{
+			c.push_back('1');
+		}
+	}
+	else if (a.length() == b.length())
+	{
+		for (int i = a.length() - 1; i >= 0; i--)
+		{
+			num = 0;
+			num = a[i] - '0' + b[i] - '0' + memo;
+			memo = 0;
+			if (num > 2)										//lưu biến nhớ khi số cộng lại lớn hơn 9
+			{
+				memo = 1;
+				num = num % 2;
+			}
+			else if (num > 1)
+			{
+				memo = 1;
+				num = num % 2;
+			}
+			c.push_back(char(num + 48));
+		}
+		if (memo == 1 && c.length() < 128)
+		{
+			c.push_back('1');
+		}
 	}
 	else
 	{
@@ -231,6 +259,10 @@ string cong(string a, string b)
 				num = num % 2;
 			}
 			c.push_back(char(num + 48));
+		}
+		if (memo == 1 && c.length() < 128)
+		{
+			c.push_back('1');
 		}
 	}
 	for (int i = c.length() - 1; i >= 0; i--)
@@ -299,10 +331,56 @@ string OR(string s1, string s2)
 	return s3 + s;
 }
 
+string XOR(string s1, string s2)
+{
+	string s;
+	string s3;
+	int length = s1.length();
+	if (s1.length() > s2.length())
+	{
+		length = s2.length();
+		s3 = s1.substr(0, s1.length() - length);
+		s1 = s1.substr(s1.length() - length, length);
+	}
+	else if (s1.length() < s2.length())
+	{
+		length = s1.length();
+		s3 = s1.substr(0, s1.length() - length);
+		s2 = s2.substr(s2.length() - length, length);
+	}
+	for (int i = 0; i < length; i++)
+	{
+		if (s1[i] - '0' ==  s2[i] - '0')
+		{
+			s.push_back('0');
+		}
+		else
+		{
+			s.push_back('1');
+		}
+	}
+	return s3 + s;
+}
+
+string NOT(string s)
+{
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (s[i] - '0' == 1)
+		{
+			s[i] = '0';
+		}
+		else
+		{
+			s[i] = '1';
+		}
+	}
+	return s;
+}
 int main() {
-	string s = "00111100";
+	string s = "100111100";
 	string s1 = "00001101";
-	cout << OR(s, s1);
+	cout << NOT(s);
 	
 	system("pause");
 	return 0;
