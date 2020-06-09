@@ -223,3 +223,11 @@ string QInt::shiftLeft(string StrBin, int SoBitDich) {
 
 	return StrBin;
 }
+
+string QInt::DiChuyenSangTrai(string StrBin, int SoBitDich) {
+	for (int i = 0; i < SoBitDich; i++) {
+		StrBin.push_back('0');
+	}
+
+	return StrBin;
+}
