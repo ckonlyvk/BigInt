@@ -374,67 +374,46 @@ string ConvertToDecimal(string s)
 	return str;
 }
 
-string shiftRight(string StrBin, int SoBitDich){
-	int lenghtStrBin = StrBin.length();
-	int i = 0;
-	int BitDau;
-
-	while ((StrBin[i] - '0') == 0) {
-		i++;
-
-		if (i >= lenghtStrBin) {
-			break;
-		}
-	}
-
-	StrBin = StrBin.substr(i);//Loại bỏ số 0 dư thừa phía trước.
-	lenghtStrBin = StrBin.length();
-
-	if (lenghtStrBin == 128) {
-		BitDau = 1;
-	}
-	else if (lenghtStrBin == 0 || lenghtStrBin == SoBitDich) {
-		StrBin = "0";
-		return StrBin;
-	}
-	else {
-		BitDau = 0;
-	}
-
+string shiftRight(string StrBin, int SoBitDich) {
+	int lengthStrBin = StrBin.length();
 	int size;
 
-	if (lenghtStrBin > 0) {
+	if (lengthStrBin == 128 && StrBin[0] - '0' == 1) {
 
-		if (SoBitDich > lenghtStrBin) {
-
-			if (BitDau == 0) {
-				StrBin = "0";
-				return StrBin;
-			}
-			else {
-				size = 0;
-				SoBitDich = lenghtStrBin;
-			}
-			
+		if (SoBitDich > 128) {
+			StrBin = "";
 		}
 		else {
-			size = lenghtStrBin - SoBitDich;
+			size = lengthStrBin - SoBitDich;
+			StrBin = StrBin.substr(0, size);
+			lengthStrBin = SoBitDich;
 		}
 
-		StrBin = StrBin.substr(0, size);
+		for (int i = 0; i < lengthStrBin; i++) {
+			StrBin.insert(0, "1");
+		}
 
-		if (lenghtStrBin == 128) {
+	}
+	else {
+		int i = 0;
+		//Loại bỏ số 0 dư thừa phía trước.
+		while ((StrBin[i] - '0') == 0) {
+			i++;
 
-			if (BitDau == 1) {
-
-				for (int i = 0; i < SoBitDich; i++) {
-					StrBin.insert(0, to_string(1));
-				}
-
+			if (i >= lengthStrBin) {
+				break;
 			}
 
 		}
-		
+
+		if (lengthStrBin == i || SoBitDich >= lengthStrBin) {
+			StrBin = "0";
+		}
+		else {
+			size = lengthStrBin - SoBitDich;
+			StrBin = StrBin.substr(0, size);
+		}
+
 	}
 
 	return StrBin;
@@ -445,8 +424,8 @@ int main() {
 	//cout << kq << endl;
 	//cout << convertBinToHex(kq) << endl;
 	//cout << ConvertToDecimal(kq) << endl;
-	//string s = "10101011100100110010110101011100100110010110101011100100110010110101011100100110010110101011100100110010110101011101010101010000";
+	string s = "10101011100100110010110101011100100110010110101011100100110010110101011100100110010110101011100100110010110101011101010101010000";
 	//cout << s.length() << endl;
-	cout << shiftRight("0010000", 10) << endl;
+	cout << shiftRight(s, 5) << endl;
 
 }

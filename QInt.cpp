@@ -61,24 +61,43 @@
 ////}
 //
 //string QInt::shiftRight(string StrBin, int SoBitDich){
-//	int BitDau = StrBin[0] - '0';
-//	int length = StrBin.length();
+//	int lengthStrBin = StrBin.length();
 //	int size;
 //
-//	if (length > 0) {
+//	if (lengthStrBin == 128 && StrBin[0] - '0' == 1) {
 //
-//		if (SoBitDich > length) {
-//			size = 0;
-//			SoBitDich = length;
+//		if (SoBitDich > 128) {
+//			StrBin = "";
 //		}
 //		else {
-//			size = length - SoBitDich;
+//			size = lengthStrBin - SoBitDich;
+//			StrBin = StrBin.substr(0, size);
+//			lengthStrBin = SoBitDich;
 //		}
 //
-//		StrBin = StrBin.substr(0, size);
+//		for (int i = 0; i < lengthStrBin; i++) {
+//			StrBin.insert(0, "1");
+//		}
 //
-//		for (int i = 0; i < SoBitDich; i++) {
-//			StrBin.insert(0, to_string(BitDau));
+//	}
+//	else {
+//		int i = 0;
+//		//Loại bỏ số 0 dư thừa phía trước.
+//		while ((StrBin[i] - '0') == 0) {
+//			i++;
+//
+//			if (i >= lengthStrBin) {
+//				break;
+//			}
+//
+//		}
+//
+//		if (lengthStrBin == i || SoBitDich >= lengthStrBin) {
+//			StrBin = "0";
+//		}
+//		else {
+//			size = lengthStrBin - SoBitDich;
+//			StrBin = StrBin.substr(0, size);
 //		}
 //
 //	}
