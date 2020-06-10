@@ -27,5 +27,6 @@ int main(int argc, char *argv[]){
 
     file1.close();
     file2.close();
+
     return 1;
 }

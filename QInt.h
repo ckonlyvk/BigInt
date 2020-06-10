@@ -2,7 +2,9 @@
 #include <iostream>
 #include <string>
 #include <math.h>
+#include <bitset>
 using namespace std;
+
 class QInt
 {
 private:
@@ -18,9 +20,6 @@ public:
 	string convertHexToBin(string StrHex);
 
 	//Dịch phải
-	//friend QInt operator>>(QInt &a, int SoBitDichPhai);
-
-	//Dịch phải
 	string shiftRight(string StrBin, int SoBitDich);
 
 	//Dịch trái
@@ -31,8 +30,30 @@ public:
 
 	string multiplyQInt(string SrtBin, string StrBin);
 
-	//QInt& operator+(const QInt &a);
+    int *CreateNewArrange(int *x,int count);
 
-	string cong(string a, string b);
+    string Check_0_in_head(string s);
+
+    string BU2(string s);
+
+    string ConvertToDecimal(string s);
+
+    string cong(string a, string b);
+
+    string AND(string s1, string s2);
+
+    string OR(string s1, string s2);
+
+    string XOR(string s1, string s2);
+
+    string NOT(string s);
+
+    string ROL(string s);
+
+    string ROR(string s);
+
+    bool check(string s1, string s2);
+
+    string chia(string s1, string s2);
 };
 
