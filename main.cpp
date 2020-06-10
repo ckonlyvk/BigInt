@@ -374,11 +374,79 @@ string ConvertToDecimal(string s)
 	return str;
 }
 
+string shiftRight(string StrBin, int SoBitDich){
+	int lenghtStrBin = StrBin.length();
+	int i = 0;
+	int BitDau;
+
+	while ((StrBin[i] - '0') == 0) {
+		i++;
+
+		if (i >= lenghtStrBin) {
+			break;
+		}
+	}
+
+	StrBin = StrBin.substr(i);//Loại bỏ số 0 dư thừa phía trước.
+	lenghtStrBin = StrBin.length();
+
+	if (lenghtStrBin == 128) {
+		BitDau = 1;
+	}
+	else if (lenghtStrBin == 0 || lenghtStrBin == SoBitDich) {
+		StrBin = "0";
+		return StrBin;
+	}
+	else {
+		BitDau = 0;
+	}
+
+	int size;
+
+	if (lenghtStrBin > 0) {
+
+		if (SoBitDich > lenghtStrBin) {
+
+			if (BitDau == 0) {
+				StrBin = "0";
+				return StrBin;
+			}
+			else {
+				size = 0;
+				SoBitDich = lenghtStrBin;
+			}
+			
+		}
+		else {
+			size = lenghtStrBin - SoBitDich;
+		}
+
+		StrBin = StrBin.substr(0, size);
+
+		if (lenghtStrBin == 128) {
+
+			if (BitDau == 1) {
+
+				for (int i = 0; i < SoBitDich; i++) {
+					StrBin.insert(0, to_string(1));
+				}
+
+			}
+
+		}
+		
+	}
+
+	return StrBin;
+}
+
 int main() {
-	string kq = multiplyQInt("101010111001001100101", "11011111101110011");
-	cout << kq <<endl;
-	cout << convertBinToHex(kq) << endl;
-	cout << ConvertToDecimal(kq) << endl;
-	system("pause");
-	return 0;
+	//string kq = multiplyQInt("101010111001001100101", "11011111101110011");
+	//cout << kq << endl;
+	//cout << convertBinToHex(kq) << endl;
+	//cout << ConvertToDecimal(kq) << endl;
+	//string s = "10101011100100110010110101011100100110010110101011100100110010110101011100100110010110101011100100110010110101011101010101010000";
+	//cout << s.length() << endl;
+	cout << shiftRight("0010000", 10) << endl;
+
 }
