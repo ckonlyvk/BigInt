@@ -81,23 +81,16 @@ string QInt::shiftRight(string StrBin, int SoBitDich){
 
 	}
 	else {
-		int i = 0;
-		//Loại bỏ số 0 dư thừa phía trước.
-		while ((StrBin[i] - '0') == 0) {
-			i++;
+		StrBin = Check_0_in_head(StrBin);
+		lengthStrBin = StrBin.length();
 
-			if (i >= lengthStrBin) {
-				break;
-			}
-
-		}
-
-		if (lengthStrBin == i || SoBitDich >= lengthStrBin) {
+		if (StrBin.compare("") == 0 || SoBitDich >= lengthStrBin) {
 			StrBin = "0";
 		}
 		else {
 			size = lengthStrBin - SoBitDich;
 			StrBin = StrBin.substr(0, size);
+			StrBin = Check_0_in_head(StrBin);
 		}
 
 	}
@@ -108,13 +101,22 @@ string QInt::shiftRight(string StrBin, int SoBitDich){
 string QInt::multiplyQInt(string StrBin1, string StrBin2){
 	string result = "";
 	string temp = "";
+
+	if (Check_0_in_head(StrBin1).compare("") == 0 || Check_0_in_head(StrBin2).compare("") == 0) {
+		result = "0";
+		return result;
+	}
+
 	int lenght = StrBin1.length();
 	int j = 0;
+
 	for (int i = lenght - 1; i >= 0; i--) {
+
 		if (StrBin1[i] - '0' == 1) {
 			temp = StrBin2;
 			result = cong(result, DiChuyenSangTrai(temp, j));
 		}
+
 		j++;
 	}
 
@@ -122,23 +124,34 @@ string QInt::multiplyQInt(string StrBin1, string StrBin2){
 }
 
 string QInt::shiftLeft(string StrBin, int SoBitDich) {
-	int length = StrBin.length();
+	int length;
 	int size;
-	if (SoBitDich < 0) return StrBin;
 
-	if (length > 0) {
-		if (SoBitDich > length) {
-			StrBin = "";
-			size = length;
+	if (SoBitDich < 0) return Check_0_in_head(StrBin);//Xử lý như thế nào cho hợp lý?
+
+	StrBin = Check_0_in_head(StrBin);
+	length = StrBin.length();
+
+	if (SoBitDich >= length || StrBin.compare("") == 0) {
+		StrBin = "0";
+		return StrBin;
+	}
+	else {
+		StrBin = StrBin.substr(SoBitDich, length);
+		size = SoBitDich;
+		StrBin = Check_0_in_head(StrBin);
+
+		if (StrBin.compare("") == 0) {
+			StrBin = "0";
+			return StrBin;
 		}
 		else {
-			StrBin = StrBin.substr(SoBitDich, length);
-			size = SoBitDich;
-		}
-	}
 
-	for (int i = 0; i < size; i++) {
-		StrBin.push_back('0');
+			for (int i = 0; i < size; i++) {
+				StrBin.push_back('0');
+			}
+
+		}
 	}
 
 	return StrBin;
@@ -152,7 +165,7 @@ string QInt::DiChuyenSangTrai(string StrBin, int SoBitDich) {
 	return StrBin;
 }
 
-int QInt::*CreateNewArrange(int *x,int count)
+int* QInt::CreateNewArrange(int *x,int count)
 {
 	int*y = new int[count + 1];
 	for (int i = 0; i < count; i++)
@@ -162,21 +175,20 @@ int QInt::*CreateNewArrange(int *x,int count)
 	y[count] = 0;
 	return y;
 }
+
 string QInt::Check_0_in_head(string s)
 {
 	for (int i = 0; i < s.length(); i++)
 	{
 		if (s[i] - '0' == 1)
 		{
-			if (i != 0)
-			{
-				s = s.substr(i, s.length() - i);
-			}
+			s = s.substr(i, s.length() - i);
 			return s;
 		}
 	}
 	return "";
 }
+
 string QInt::BU2(string s)
 {
 	for (int i = s.length() - 1; i >= 0; i--)

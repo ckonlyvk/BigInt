@@ -1,6 +1,5 @@
 #include"ProcessData.h"
 
-using namespace std;
 string Devide2(string s){
     string result="";
     int tmp=0;
