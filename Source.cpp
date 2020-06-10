@@ -23,6 +23,28 @@ string Check_0_in_head(string s)
 			{
 				s = s.substr(i, s.length() - i);
 			}
+			return s;
+		}
+	}
+	return "";
+}
+string BU2(string s)
+{
+	for (int i = s.length() - 1; i >= 0; i--)
+	{
+		if (s[i] - '0' == 1)
+		{
+			for (int j = i - 1; j >= 0; j--)
+			{
+				if (s[j] - '0' == 1)
+				{
+					s[j] = '0';
+				}
+				else
+				{
+					s[j] = '1';
+				}
+			}
 			break;
 		}
 	}
@@ -30,6 +52,7 @@ string Check_0_in_head(string s)
 }
 string ConvertToDecimal(string s) 
 {
+	s = Check_0_in_head(s);
 	int dau = s[0] - '0';
 	if (s.length() == 128 && dau == 1)
 	{
@@ -162,6 +185,8 @@ string cong(string a, string b)
 	string str;
 	int memo = 0;
 	int num = 0;
+	a = Check_0_in_head(a);
+	b = Check_0_in_head(b);
 	if (a.length() > b.length())
 	{
 		int j = b.length() - 1;
@@ -292,6 +317,8 @@ string cong(string a, string b)
 string AND(string s1, string s2)
 {
 	string s;
+	s1 = Check_0_in_head(s1);
+	s2 = Check_0_in_head(s2);
 	int length = s1.length();
 	if (s1.length() > s2.length())
 	{
@@ -322,6 +349,8 @@ string OR(string s1, string s2)
 {
 	string s;
 	string s3;
+	s1 = Check_0_in_head(s1);
+	s2 = Check_0_in_head(s2);
 	int length = s1.length();
 	if (s1.length() > s2.length())
 	{
@@ -354,6 +383,8 @@ string XOR(string s1, string s2)
 {
 	string s;
 	string s3;
+	s1 = Check_0_in_head(s1);
+	s2 = Check_0_in_head(s2);
 	int length = s1.length();
 	if (s1.length() > s2.length())
 	{
@@ -417,11 +448,85 @@ string ROR(string s)
 	s = Check_0_in_head(s);
 	return s;
 }
+
+bool check(string s1, string s2)
+{
+	if (s1.length() == s2.length())
+	{
+		for (int i = 0; i < s1.length(); i++)
+		{
+			if (s1[i] - '0' > s2[i] - '0')
+			{
+				break;
+			}
+			if (s1[i] - '0' < s2[i] - '0')
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+string chia(string s1, string s2)
+{
+	bool status = true;
+	string s;
+	string s3;
+	s1 = Check_0_in_head(s1);
+	s2 = Check_0_in_head(s2);
+	if (s1.length() < s2.length())
+	{
+		s = s1;
+	}
+	else if (s1.length() == s2.length())
+	{
+		for (int i = 0; i < s1.length(); i++)
+		{
+			if (s1[i] - '0' > s2[i] - '0')
+			{
+				return "1";
+				break;
+			}
+			if (s1[i] - '0' < s2[i] - '0')
+			{
+				s = s1;
+				break;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < s1.length(); i++)
+		{
+			s3.push_back(s1[i]);
+			if (s3.length() > s2.length())
+			{
+				s.push_back('1');
+				s3 = cong(s3, BU2(s2));
+				s3 = s3.substr(1, s3.length() - 1);
+			}
+			else if (s3.length() == s2.length() && check(s3, s2) == true)
+			{
+				s.push_back('1');
+				s3 = cong(s3, BU2(s2));
+				s3 = s3.substr(1, s3.length() - 1);
+			}
+			else if (s3.length() < s2.length() || check(s3, s2) == false)
+			{
+				s.push_back('0');
+			}
+			s3 = Check_0_in_head(s3);
+		}
+	}
+	s = Check_0_in_head(s);
+	return s;
+}
 int main() 
 {
-	string s = "101";
-	string s1 = "1101";
-	cout << AND(s,s1);
+	string s = "100111010001111";
+	string s1 = "10011";
+	cout << chia(s,s1);
 	
 	system("pause");
 	return 0;
