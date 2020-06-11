@@ -56,24 +56,7 @@ string ConvertToDecimal(string s)
 	int dau = s[0] - '0';
 	if (s.length() == 128 && dau == 1)
 	{
-		for (int i = s.length() - 1; i >= 0; i--)
-		{
-			if (s[i] - '0' == 1)
-			{
-				for (int j = i - 1; j >= 0; j--)
-				{
-					if (s[j] - '0' == 1)
-					{
-						s[j] = '0';
-					}
-					else
-					{
-						s[j] = '1';
-					}
-				}
-				break;
-			}
-		}
+		s = BU2(s);
 	}
 	string str;
 	string str1;
@@ -175,7 +158,10 @@ string ConvertToDecimal(string s)
 			str.push_back(str1[i]);
 		}
 	}
-	str = Check_0_in_head(str);
+	if (dau != 1)
+	{
+		str = Check_0_in_head(str);
+	}
 	if(str.length()==0)
 	{
 		str.push_back('0');
@@ -559,9 +545,9 @@ string chia(string s1, string s2)
 }
 int main() 
 {
-	string s = "100001";
+	string s = "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001";
 	string s1 = "100001";
-	cout << chia(s,s1);
+	cout << ConvertToDecimal(s);
 	
 	system("pause");
 	return 0;
