@@ -1,4 +1,46 @@
 #include "QInt.h"
+#include "ProcessData.h"
+QInt::QInt(){
+	for(int i=0;i<4;i++){
+		arrayBits[i]=0;
+	}
+}
+
+void QInt::Input(string StrBin){
+	int end_pos=StrBin.length();
+	int start_pos=(end_pos - 31 < 0? 0:end_pos-32);
+	int k=3;
+	while(k>=0 && end_pos>0){
+		arrayBits[k]=ConvertBinToDec(StrBin.substr(start_pos,end_pos-start_pos));
+		k--;
+		end_pos=start_pos;
+		start_pos=(end_pos - 31 < 0? 0:end_pos-32);
+	}
+}
+
+void QInt::Output(){
+	for(int i=0;i<=3;i++)
+	{
+		cout<<arrayBits[i]<<" ";
+	}
+}
+
+string QInt::QIntToBin(){
+	string tmp="";
+	for(int i=0;i<4;i++){
+		// if(arrayBits[i]==0 && tmp=="")
+		// 	continue;
+		tmp+=ConvertDecimalToBin(IntToStr(arrayBits[i]),32);
+	}
+	return tmp;
+}
+
+string QInt::QIntToHex()
+{
+	string tmp=QIntToBin();
+	return ConvertBinToHex(tmp);
+}
+
 char QInt::convertBin4bitsToHex(string subStr) {
 	int length = subStr.length();
 	char result = 0;
@@ -19,24 +61,12 @@ char QInt::convertBin4bitsToHex(string subStr) {
 	return result;
 }
 
-string QInt::convertBinToHex(string StrBin){
-	int lenghtStrBin = StrBin.length();
-	int i = 0;
-
-	while ((StrBin[i] - '0') == 0) {
-		i++;
-
-		if (i >= lenghtStrBin) {
-			break;
-		}
-	}
-
-	StrBin = StrBin.substr(i);
-	lenghtStrBin = StrBin.length();
-
+string QInt::convertBinToHex(){
+ 	string StrBin = this->QIntToBin();
 	string subStr4bits;
 	string strHex = "";
 	string temp = "";
+	int lenghtStrBin = 128;
 
 	while (lenghtStrBin > 0) {
 
@@ -56,105 +86,8 @@ string QInt::convertBinToHex(string StrBin){
 	return strHex;
 }
 
-//string QInt::convertHexToBin(string StrHex) {
-//	//return toStrBin();
-//}
-
-string QInt::shiftRight(string StrBin, int SoBitDich){
-	int lengthStrBin = StrBin.length();
-	int size;
-
-	if (lengthStrBin == 128 && StrBin[0] - '0' == 1) {
-
-		if (SoBitDich > 128) {
-			StrBin = "";
-		}
-		else {
-			size = lengthStrBin - SoBitDich;
-			StrBin = StrBin.substr(0, size);
-			lengthStrBin = SoBitDich;
-		}
-
-		for (int i = 0; i < lengthStrBin; i++) {
-			StrBin.insert(0, "1");
-		}
-
-	}
-	else {
-		StrBin = Check_0_in_head(StrBin);
-		lengthStrBin = StrBin.length();
-
-		if (StrBin.compare("") == 0 || SoBitDich >= lengthStrBin) {
-			StrBin = "0";
-		}
-		else {
-			size = lengthStrBin - SoBitDich;
-			StrBin = StrBin.substr(0, size);
-			StrBin = Check_0_in_head(StrBin);
-		}
-
-	}
-
-	return StrBin;
-}
-
-string QInt::multiplyQInt(string StrBin1, string StrBin2){
-	string result = "";
-	string temp = "";
-
-	if (Check_0_in_head(StrBin1).compare("") == 0 || Check_0_in_head(StrBin2).compare("") == 0) {
-		result = "0";
-		return result;
-	}
-
-	int lenght = StrBin1.length();
-	int j = 0;
-
-	for (int i = lenght - 1; i >= 0; i--) {
-
-		if (StrBin1[i] - '0' == 1) {
-			temp = StrBin2;
-			result = cong(result, DiChuyenSangTrai(temp, j));
-		}
-
-		j++;
-	}
-
-	return result;
-}
-
-string QInt::shiftLeft(string StrBin, int SoBitDich) {
-	int length;
-	int size;
-
-	if (SoBitDich < 0) return Check_0_in_head(StrBin);//Xử lý như thế nào cho hợp lý?
-
-	StrBin = Check_0_in_head(StrBin);
-	length = StrBin.length();
-
-	if (SoBitDich >= length || StrBin.compare("") == 0) {
-		StrBin = "0";
-		return StrBin;
-	}
-	else {
-		StrBin = StrBin.substr(SoBitDich, length);
-		size = SoBitDich;
-		StrBin = Check_0_in_head(StrBin);
-
-		if (StrBin.compare("") == 0) {
-			StrBin = "0";
-			return StrBin;
-		}
-		else {
-
-			for (int i = 0; i < size; i++) {
-				StrBin.push_back('0');
-			}
-
-		}
-	}
-
-	return StrBin;
+string QInt::convertHexToBin() {
+	return this->QIntToBin();
 }
 
 string QInt::DiChuyenSangTrai(string StrBin, int SoBitDich) {
@@ -211,6 +144,7 @@ string QInt::BU2(string s)
 	}
 	return s;
 }
+
 string QInt::ConvertToDecimal(string s) 
 {
 	s = Check_0_in_head(s);
@@ -338,6 +272,25 @@ string QInt::ConvertToDecimal(string s)
 	}
 	str = Check_0_in_head(str);
 	return str;
+}
+
+bool QInt::check(string s1, string s2)
+{
+	if (s1.length() == s2.length())
+	{
+		for (int i = 0; i < s1.length(); i++)
+		{
+			if (s1[i] - '0' > s2[i] - '0')
+			{
+				break;
+			}
+			if (s1[i] - '0' < s2[i] - '0')
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 string QInt::cong(string a, string b)
@@ -472,26 +425,121 @@ string QInt::cong(string a, string b)
 		str.push_back(c[i]);
 	}
 	str = Check_0_in_head(str);
+	if (str.length() == 0)
+	{
+		str.push_back('0');
+	}
 	return str;
 }
 
-string QInt::AND(string s1, string s2)
-{
+void QInt::operator>>(int SoBitDich){
+	string StrBin = this->QIntToBin();
+	char BitDau = StrBin[0];
 	string s;
-	s1 = Check_0_in_head(s1);
-	s2 = Check_0_in_head(s2);
-	int length = s1.length();
-	if (s1.length() > s2.length())
-	{
-		length = s2.length();
-		s1 = s1.substr(s1.length() - length, length);
+	
+	if (SoBitDich >= 0){
+		StrBin = StrBin.substr(0, 128 - SoBitDich);
+
+		for(int i = 0; i < SoBitDich; i++){
+			s.push_back(BitDau);
+		}
+
+		s = s + StrBin;
 	}
-	else if(s1.length() < s2.length())
-	{
-		length = s1.length();
-		s2 = s2.substr(s2.length() - length, length);
+	//Nếu số bit dịch nhỏ hơn 0 thì không xử lý.
+	this->Input(s);
+}
+
+void QInt::operator<<(int SoBitDich){
+	string StrBin = this->QIntToBin();
+	
+	if (SoBitDich >= 0){
+		StrBin = StrBin.substr(SoBitDich);
+
+		for(int i = 0; i < SoBitDich; i++){
+			StrBin.push_back('0');
+		}
+		
 	}
-	for (int i = 0; i < length; i++)
+	//Nếu số bit dịch nhỏ hơn 0 thì không xử lý.
+	this->Input(StrBin);
+}
+
+QInt QInt::operator*(QInt qint){
+	string StrBin1 = this->QIntToBin();
+	string StrBin2 = qint.QIntToBin();
+	string result = "";
+	string temp = "";
+
+	//Khi có ConvertDecimal thì dùng cái if trên.
+	//if (this->ConvertToDecimal() == "0" || qint.ConvertToDecimal() == "0"){
+	if (ConvertBinToDec(StrBin1) == 0 || ConvertBinToDec(StrBin2) == 0){
+		this->Input(ConvertStrToBin("0", 10));
+	} else {
+		int j = 0;
+
+		for (int i = 128 - 1; i >= 0; i--) {
+
+			if (StrBin1[i] - '0' == 1) {
+				temp = StrBin2;
+				result = cong(result, DiChuyenSangTrai(temp, j));
+			}
+
+			j++;
+		}
+
+		this->Input(result);
+	}
+
+	return *this;
+}
+
+QInt QInt::operator+(QInt a)
+{
+	QInt KQ;
+	string x = this->QIntToBin();
+	string y = a.QIntToBin();
+	string c;
+	string str;
+	int memo = 0;
+	int num = 0;
+
+	for (int i = y.length() - 1; i >= 0; i--)
+	{
+		num = 0;
+		num = y[i] - '0' + x[i] - '0' + memo;
+		memo = 0;
+		if (num > 2)										//lưu biến nhớ khi số cộng lại lớn hơn 9
+		{
+			memo = 1;
+			num = num % 2;
+		}
+		else if (num > 1)
+		{
+			memo = 1;
+			num = num % 2;
+		}
+		c.push_back(char(num + 48));
+	}
+	for (int i = c.length() - 1; i >= 0; i--)
+	{
+		str.push_back(c[i]);
+	}
+	if (str.length() == 0)
+	{
+		str.push_back('0');
+	}
+	KQ.Input(str);
+	return KQ;
+}
+
+QInt QInt::operator&(QInt x)
+{
+	QInt y;
+	string s;
+	string s1 = this->QIntToBin();
+	string s2 = x.QIntToBin();
+	for (int i = 0; i < 128; i++)
 	{
 		if (s1[i] - '0' == 1 && s2[i] - '0' == 1)
 		{
@@ -502,30 +550,18 @@ string QInt::AND(string s1, string s2)
 			s.push_back('0');
 		}
 	}
-	s = Check_0_in_head(s);
-	return s;
+	y.Input(s);
+	return y;
 }
 
-string QInt::OR(string s1, string s2)
+QInt QInt::operator|(QInt x)
 {
-	string s;
-	string s3;
-	s1 = Check_0_in_head(s1);
-	s2 = Check_0_in_head(s2);
-	int length = s1.length();
-	if (s1.length() > s2.length())
-	{
-		length = s2.length();
-		s3 = s1.substr(0, s1.length() - length);
-		s1 = s1.substr(s1.length() - length, length);
-	}
-	else if (s1.length() < s2.length())
-	{
-		length = s1.length();
-		s3 = s1.substr(0, s1.length() - length);
-		s2 = s2.substr(s2.length() - length, length);
-	}
-	for (int i = 0; i < length; i++)
+	string s, s1, s2;
+	QInt y;
+	s1 = this->QIntToBin();
+	s2 = x.QIntToBin();
+
+	for (int i = 0; i < 128; i++)
 	{
 		if (s1[i] - '0' == 1 || s2[i] - '0' == 1)
 		{
@@ -536,30 +572,17 @@ string QInt::OR(string s1, string s2)
 			s.push_back('0');
 		}
 	}
-	s = Check_0_in_head(s3 + s);
-	return s;
+	y.Input(s);
+	return y;
 }
 
-string QInt::XOR(string s1, string s2)
+QInt QInt::operator^(QInt x)
 {
-	string s;
-	string s3;
-	s1 = Check_0_in_head(s1);
-	s2 = Check_0_in_head(s2);
-	int length = s1.length();
-	if (s1.length() > s2.length())
-	{
-		length = s2.length();
-		s3 = s1.substr(0, s1.length() - length);
-		s1 = s1.substr(s1.length() - length, length);
-	}
-	else if (s1.length() < s2.length())
-	{
-		length = s1.length();
-		s3 = s1.substr(0, s1.length() - length);
-		s2 = s2.substr(s2.length() - length, length);
-	}
-	for (int i = 0; i < length; i++)
+	string s, s1, s2;
+	QInt y;
+	s1 = this->QIntToBin();
+	s2 = x.QIntToBin();
+	for (int i = 0; i < 128; i++)
 	{
 		if (s1[i] - '0' ==  s2[i] - '0')
 		{
@@ -570,12 +593,13 @@ string QInt::XOR(string s1, string s2)
 			s.push_back('1');
 		}
 	}
-	s = Check_0_in_head(s3 + s);
-	return s;
+	y.Input(s);
+	return y;
 }
 
-string QInt::NOT(string s)
+QInt QInt::operator~()
 {
+	string s = this->QIntToBin();
 	for (int i = 0; i < s.length(); i++)
 	{
 		if (s[i] - '0' == 1)
@@ -587,27 +611,29 @@ string QInt::NOT(string s)
 			s[i] = '1';
 		}
 	}
-	s = Check_0_in_head(s);
-	return s;
+	this->Input(s);
+	return *this;
 }
 
-string QInt::ROL(string s)
+QInt QInt::ROL()
 {
+	string s = this->QIntToBin();
 	char x = s[0];
 	s = s.substr(1, s.length() - 1);
 	s.push_back(x);
-	s = Check_0_in_head(s);
-	return s;
+	this->Input(s);
+	return *this;
 }
 
-string QInt::ROR(string s)
+QInt QInt::ROR()
 {
+	string s = this->QIntToBin();
 	string s1;
-	s1.push_back(s[s.length() - 1]);
+	s1.push_back(s[127]);
 	s.pop_back();
 	s = s1 + s;
-	s = Check_0_in_head(s);
-	return s;
+	this->Input(s);
+	return *this;
 }
 
 bool QInt::check(string s1, string s2)
@@ -629,57 +655,57 @@ bool QInt::check(string s1, string s2)
 	return true;
 }
 
-string QInt::chia(string s1, string s2)
-{
-	bool status = true;
-	string s;
-	string s3;
-	s1 = Check_0_in_head(s1);
-	s2 = Check_0_in_head(s2);
-	if (s1.length() < s2.length())
-	{
-		s = s1;
-	}
-	else if (s1.length() == s2.length())
-	{
-		for (int i = 0; i < s1.length(); i++)
-		{
-			if (s1[i] - '0' > s2[i] - '0')
-			{
-				return "1";
-				break;
-			}
-			if (s1[i] - '0' < s2[i] - '0')
-			{
-				s = s1;
-				break;
-			}
-		}
-	}
-	else
-	{
-		for (int i = 0; i < s1.length(); i++)
-		{
-			s3.push_back(s1[i]);
-			if (s3.length() > s2.length())
-			{
-				s.push_back('1');
-				s3 = cong(s3, BU2(s2));
-				s3 = s3.substr(1, s3.length() - 1);
-			}
-			else if (s3.length() == s2.length() && check(s3, s2) == true)
-			{
-				s.push_back('1');
-				s3 = cong(s3, BU2(s2));
-				s3 = s3.substr(1, s3.length() - 1);
-			}
-			else if (s3.length() < s2.length() || check(s3, s2) == false)
-			{
-				s.push_back('0');
-			}
-			s3 = Check_0_in_head(s3);
-		}
-	}
-	s = Check_0_in_head(s);
-	return s;
-}
+// QInt QInt::operator/(QInt x)
+// {
+// 	bool status = true;
+// 	string s, s1, s2;
+// 	string s3;
+// 	s1 = this->QIntToBin();
+// 	s2 = x.QIntToBin();
+// 	if (s1.length() < s2.length())
+// 	{
+// 		s = s1;
+// 	}
+// 	else if (s1.length() == s2.length())
+// 	{
+// 		for (int i = 0; i < s1.length(); i++)
+// 		{
+// 			if (s1[i] - '0' > s2[i] - '0')
+// 			{
+// 				return "1";
+// 				break;
+// 			}
+// 			if (s1[i] - '0' < s2[i] - '0')
+// 			{
+// 				s = s1;
+// 				break;
+// 			}
+// 		}
+// 	}
+// 	else
+// 	{
+// 		for (int i = 0; i < s1.length(); i++)
+// 		{
+// 			s3.push_back(s1[i]);
+// 			if (s3.length() > s2.length())
+// 			{
+// 				s.push_back('1');
+// 				s3 = s3 + BU2(s2);
+// 				s3 = s3.substr(1, s3.length() - 1);
+// 			}
+// 			else if (s3.length() == s2.length() && check(s3, s2) == true)
+// 			{
+// 				s.push_back('1');
+// 				s3 = s3 + BU2(s2);
+// 				s3 = s3.substr(1, s3.length() - 1);
+// 			}
+// 			else if (s3.length() < s2.length() || check(s3, s2) == false)
+// 			{
+// 				s.push_back('0');
+// 			}
+// 			s3 = Check_0_in_head(s3);
+// 		}
+// 	}
+// 	s = Check_0_in_head(s);
+// 	return s;
+// }

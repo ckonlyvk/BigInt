@@ -34,11 +34,32 @@
 // }
 
 
-
+//g++ main.cpp ProcessData.cpp QInt.cpp -o main
 int main (){
 
-    QInt a;
-    cout << "Hello World!"<<endl;
-    cout<<a.multiplyQInt("100110110", "0");
+    QInt a, b;
+    string s="110001100001001001000100";
+    string s2="1001101010101111111000011111000101000110001110001100";
+    string bin=ConvertStrToBin(s,10);
+    a.Input(ConvertStrToBin(s,2));
+    b.Input(ConvertStrToBin(s2,2));
+    
+   // cout << a.QIntToBin()<<endl;
+   // cout << b.QIntToBin()<<endl;
+    //cout << "lb = " << b.QIntToBin().length()<<endl;
+    //a.Output();
+    cout<<endl;
+    //cout<<s.length()<<endl;
+   //cout<<a.QIntToBin();
+   cout << a.convertBinToHex()<<endl;
+    cout << b.convertBinToHex()<<endl;
+    //cout << b.QIntToBin()<<endl;
+    //a << 5;
+    //cout << a.QIntToBin()<<endl;
+    string tich = (a*b).convertBinToHex();
+   // cout << "tich chua chuan hoa: "<< tich << endl;
+    //ChuanHoa(tich);
+    //cout << "tich da chuan hoa: "<<tich << endl;
+    system("pause"); 
     return 0;
 }
