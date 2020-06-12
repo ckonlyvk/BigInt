@@ -1,0 +1,19 @@
+﻿  main.cpp
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(40,25): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(41,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(64,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(88,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(112,25): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(113,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(135,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(157,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(168,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(182,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(188,26): warning C4244: '+=': conversion from 'double' to 'char', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(202,36): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(214,32): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(254,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(348,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(368,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\main.cpp(378,36): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  BigInt.vcxproj -> E:\Thanh Duc\Nam 2\HK2\KTMT & HN\Bài tập\Do an 1\Github\BigInt\x64\Debug\BigInt.exe
