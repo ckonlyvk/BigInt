@@ -3,6 +3,7 @@
 #include <string>
 #include <math.h>
 #include <bitset>
+#include"ProcessData.h"
 using namespace std;
 
 class QInt
@@ -10,11 +11,21 @@ class QInt
 private:
 	int arrayBits[4];
 public:
+	//Hàm khởi tạo
+	QInt();
+
+	//Input QInt từ một dãy nhị phân
+	void Input(string StrBin);
+	void Output();
+	//QInt sang cac he khac de tinh toan 
+	string QIntToBin();
+	string QIntToDecimal();
+	string QIntToHex();
 	//Chuyển QInt hệ nhị phân sang hệ thập lục phân
-	string convertBinToHex(string StrBin);
+	//string convertBinToHex(string StrBin);
 
 	//Chuyển 4 bits sang hệ thập lục phân
-	char convertBin4bitsToHex(string subStr);
+	//char convertBin4bitsToHex(string subStr);
 
 	//Chuyển QInt hệ thập lục phân sang hệ nhị phân
 	string convertHexToBin(string StrHex);
@@ -28,7 +39,8 @@ public:
 	//Dùng trong phép nhân.
 	string DiChuyenSangTrai(string StrBin, int SoBitDich);
 
-	string multiplyQInt(string SrtBin, string StrBin);
+	//string multiplyQInt(string SrtBin, string StrBin);
+	string multiplyQInt(QInt other);
 
     int *CreateNewArrange(int *x,int count);
 
@@ -55,5 +67,6 @@ public:
     bool check(string s1, string s2);
 
     string chia(string s1, string s2);
+
 };
 

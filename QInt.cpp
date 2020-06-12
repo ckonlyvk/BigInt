@@ -1,64 +1,47 @@
 #include "QInt.h"
-char QInt::convertBin4bitsToHex(string subStr) {
-	int length = subStr.length();
-	char result = 0;
-	char t;
 
-	for (int i = 0; i < length; i++) {
-		t = subStr[length - 1 - i] - '0';
-		result += t * pow(2, i);
-	}
 
-	if (result >= 0 && result <= 9) {
-		result += 48;
+QInt::QInt(){
+	for(int i=0;i<4;i++){
+		arrayBits[i]=0;
 	}
-	else {
-		result = 65 + (result - 10);
-	}
-
-	return result;
 }
 
-string QInt::convertBinToHex(string StrBin){
-	int lenghtStrBin = StrBin.length();
-	int i = 0;
-
-	while ((StrBin[i] - '0') == 0) {
-		i++;
-
-		if (i >= lenghtStrBin) {
-			break;
-		}
+void QInt::Input(string StrBin){
+	int end_pos=StrBin.length();
+	int start_pos=(end_pos - 31 < 0? 0:end_pos-32);
+	int k=3;
+	while(k>=0 && end_pos>0){
+		arrayBits[k]=ConvertBinToDec(StrBin.substr(start_pos,end_pos-start_pos));
+		k--;
+		end_pos=start_pos;
+		start_pos=(end_pos - 31 < 0? 0:end_pos-32);
 	}
-
-	StrBin = StrBin.substr(i);
-	lenghtStrBin = StrBin.length();
-
-	string subStr4bits;
-	string strHex = "";
-	string temp = "";
-
-	while (lenghtStrBin > 0) {
-
-		if (lenghtStrBin < 4) {
-			subStr4bits = StrBin.substr(0, lenghtStrBin);
-		}
-		else {
-			subStr4bits = StrBin.substr(lenghtStrBin - 4, 4);
-		}
-
-		temp = convertBin4bitsToHex(subStr4bits);
-		strHex.insert(0, temp);
-
-		lenghtStrBin -= 4;
-	}
-
-	return strHex;
 }
 
-//string QInt::convertHexToBin(string StrHex) {
-//	//return toStrBin();
-//}
+void QInt::Output(){
+	for(int i=0;i<=3;i++)
+	{
+		cout<<arrayBits[i]<<" ";
+	}
+}
+
+string QInt::QIntToBin(){
+	string tmp="";
+	for(int i=0;i<4;i++){
+		// if(arrayBits[i]==0 && tmp=="")
+		// 	continue;
+		tmp+=ConvertDecimalToBin(IntToStr(arrayBits[i]),32);
+	}
+	return tmp;
+}
+
+string QInt::QIntToHex()
+{
+	string tmp=QIntToBin();
+	return ConvertBinToHex(tmp);
+}
+
 
 string QInt::shiftRight(string StrBin, int SoBitDich){
 	int lengthStrBin = StrBin.length();
@@ -98,7 +81,9 @@ string QInt::shiftRight(string StrBin, int SoBitDich){
 	return StrBin;
 }
 
-string QInt::multiplyQInt(string StrBin1, string StrBin2){
+string QInt::multiplyQInt(QInt other){
+	string StrBin1=(*this).QIntToBin(); 
+	string StrBin2=other.QIntToBin();
 	string result = "";
 	string temp = "";
 
