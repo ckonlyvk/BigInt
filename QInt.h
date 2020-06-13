@@ -3,7 +3,7 @@
 #include <string>
 #include <math.h>
 #include <bitset>
-
+#include"ProcessData.h"
 using namespace std;
 
 class QInt
@@ -11,7 +11,8 @@ class QInt
 private:
 	int arrayBits[4];
 public:
-QInt();
+	//Hàm khởi tạo
+	//QInt();
 
 	//Input QInt từ một dãy nhị phân
 	void Input(string StrBin);
@@ -21,50 +22,51 @@ QInt();
 	string QIntToDecimal();
 	string QIntToHex();
 	//Chuyển QInt hệ nhị phân sang hệ thập lục phân
-	string convertBinToHex();
+	//string convertBinToHex(string StrBin);
 
 	//Chuyển 4 bits sang hệ thập lục phân
-	char convertBin4bitsToHex(string subStr);
+	//char convertBin4bitsToHex(string subStr);
 
 	//Chuyển QInt hệ thập lục phân sang hệ nhị phân
-	string convertHexToBin();
+	string convertHexToBin(string StrHex);
+
+	//Dịch phải
+	string shiftRight(string StrBin, int SoBitDich);
+
+	//Dịch trái
+	string shiftLeft(string StrBin, int SoBitDich);
 
 	//Dùng trong phép nhân.
 	string DiChuyenSangTrai(string StrBin, int SoBitDich);
 
-    int *CreateNewArrange(int *x,int count);
+	//string multiplyQInt(string SrtBin, string StrBin);
+	//string multiplyQInt(QInt other);
 
-    string Check_0_in_head(string s);
+    int *CreateNewArrange(int *x,int count);
 
     string BU2(string s);
 
-    string ConvertToDecimal(string s);
+    string ConvertToDecimal();
 
-    bool check(string s1, string s2);
+	QInt operator+ ( QInt a);
 
-	void operator>> (int SoBitDich);
+	QInt operator-(QInt a);
 
-	void operator<<(int SoBitDich);
+    QInt operator&(QInt x);
 
-	void ChuanHoa(string& s);
+    QInt operator|(QInt x);
 
-	QInt operator*(QInt qint);
+    QInt operator^(QInt x);
 
-	QInt operator+(QInt a);
-
-	QInt operator&(QInt x);
-
-	QInt operator|(QInt x);
-
-	QInt operator^(QInt x);
-
-	QInt operator~();
+    QInt operator~();
 
 	QInt ROL();
 
-	QInt ROR();
+    QInt ROR();
 
+    bool check(string s1, string s2);
+	string Check_0_in_head(string s);
 	QInt operator/(QInt x);
 
-	string cong(string a, string b);
 };
+
