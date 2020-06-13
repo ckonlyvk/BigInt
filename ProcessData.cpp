@@ -17,12 +17,14 @@ string IntToStr(int num){
     bool isPositive=false;
     if(num<0){
         isPositive=true;
-        num*=-1;
+        num=num*(-1);
     }
+
     while(num!=0){
-        result+=char(num%10)+'0';
+        result+=char(abs(num%10))+'0';
         num/=10;
     }
+    
     if(isPositive)
         result+='-';
     reverse(result.begin(),result.end());
@@ -151,11 +153,6 @@ string ConvertHexToBin(string s){
         string tmp;
         if(s[i]<='9'){
             tmp=ConvertDecimalToBin(s.substr(i,1),4);
-            // reverse(tmp.begin(),tmp.end());
-            // while(tmp.length()<4){
-            //     tmp+='0';
-            // }
-            //reverse(tmp.begin(),tmp.end());
         }
         else{
             string num=IntToStr((int)(s[i]-'A')+10);
@@ -201,7 +198,12 @@ void ChuanHoa(string& s)
     {
         start_pos++;
     }
+
     s=s.substr(start_pos);
+
+	if (s.length() == 0){
+		s = "0";
+	}
 }
 
 
@@ -235,7 +237,6 @@ string Caculator(vector<string> data)
         hs2=hs1;
         i=1;
     }
-    
     while(i<data.size()){
         if((data[i][0]>='0'&&data[i][0]<='9')||(data[i][0]=='-' &&data[i].length()>1)){
             QInt tmp;
@@ -247,17 +248,14 @@ string Caculator(vector<string> data)
             string s=ConvertStrToBin(data[i],hs1);
             tmp.Input(s);
             if(data[i]=="~"){
-                s=tmp.NOT(s);
-                tmp.Input(s);
+                ~tmp;
             }
             else if(data[i]=="rol"){
-                s=tmp.ROL(s);
-                tmp.Input(s);
+                tmp=tmp.ROL();
             }
             else
             {
-                s=tmp.ROR(s);
-                tmp.Input(s);
+                tmp=tmp.ROR();
             }
             qInt.push_back(tmp);
         }
@@ -265,19 +263,20 @@ string Caculator(vector<string> data)
             int size=qInt.size()-1;
             QInt tmp;
             tmp.Input(ConvertStrToBin(data[i+1],hs1));
-            if(data[i]=="*"){
-                string s=qInt[size].multiplyQInt(tmp);
-            }
-            else ;
-                //Thuc hien phep nhan tren qInt vi tri size
+            if(data[i]=="*")
+                qInt[size]=qInt[size]*tmp;
+            else 
+                qInt[size]=qInt[size]/tmp;
+            i++;
         }
         else if(data[i]=="<<"||data[i]==">>"){
             int size=qInt.size()-1;
-            if(data[i]=="<<"){
-                //Thuc hien phep dich trai tren qInt vi tri size 
-            }
-            else ;
-                //Thuc hien phep nhan tren qInt vi tri size
+            int sobitdich=stoi(data[i+1]);
+            if(data[i]=="<<")
+                qInt[size]<<sobitdich;  
+            else 
+                qInt[size]>>sobitdich;
+            i++;
         }
         else
         {
@@ -286,13 +285,21 @@ string Caculator(vector<string> data)
         i++;
     }
 
-    for(int i=0;i<pheptoan.size()-1;i++){
-        if(pheptoan[i]=="+");
-        else;
-        // qInt[0] Xu ly + , -,&,|, ^ voi qInt[i+1] cho den khi het phep toan
+    for(int i=0;i<pheptoan.size();i++){
+        if(pheptoan[i]=="+")
+            qInt[0]=qInt[0]+qInt[i+1];
+        else if(pheptoan[i]=="-")
+            qInt[0]=qInt[0]-qInt[i+1];
+        else if(pheptoan[i]=="&")
+            qInt[0]=qInt[0]&qInt[i+1];
+        else if(pheptoan[i]=="|")
+            qInt[0]=qInt[0]|qInt[i+1];
+        else 
+            qInt[0]=qInt[0]^qInt[i+1];
+
         
     }
-    
+
     // result =qInt[0].convert(hs2) chuyen QInt thanh string minh muon xuat
     result=qInt[0].QIntToBin();
     return result;
