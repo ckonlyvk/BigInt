@@ -20,7 +20,7 @@ string IntToStr(int num){
         num*=-1;
     }
     while(num!=0){
-        result+=char(num%10)+'0';
+        result+=char(abs(num%10))+'0';
         num/=10;
     }
     if(isPositive)

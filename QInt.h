@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <string>
 #include <math.h>
@@ -29,24 +29,21 @@ QInt();
 	//Chuyển QInt hệ thập lục phân sang hệ nhị phân
 	string convertHexToBin();
 
-	//Dùng trong phép nhân.
-	string DiChuyenSangTrai(string StrBin, int SoBitDich);
-
     int *CreateNewArrange(int *x,int count);
 
     string Check_0_in_head(string s);
 
     string BU2(string s);
 
-    string ConvertToDecimal(string s);
+    string ConvertToDecimal();
 
     bool check(string s1, string s2);
 
+	QInt operator=(QInt a);
+	
 	void operator>> (int SoBitDich);
 
 	void operator<<(int SoBitDich);
-
-	void ChuanHoa(string& s);
 
 	QInt operator*(QInt qint);
 
@@ -60,11 +57,11 @@ QInt();
 
 	QInt operator~();
 
+	QInt operator-(QInt a);
+
 	QInt ROL();
 
 	QInt ROR();
 
 	QInt operator/(QInt x);
-
-	string cong(string a, string b);
 };

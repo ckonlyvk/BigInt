@@ -38,28 +38,40 @@
 int main (){
 
     QInt a, b;
-    string s="110001100001001001000100";
-    string s2="1001101010101111111000011111000101000110001110001100";
-    string bin=ConvertStrToBin(s,10);
-    a.Input(ConvertStrToBin(s,2));
-    b.Input(ConvertStrToBin(s2,2));
+    string s="1100011000010010010001001111101010101101010";
+    string s2="000000000001111111111110000000011111111111111111111111";
+
+   // a.Input(ConvertStrToBin(s,2));
+    //b.Input(ConvertStrToBin(s2, 2));
     
+    a.Input(ConvertStrToBin("-4647",10));
+    b.Input(ConvertStrToBin("4302371896916613314517792614108589",10));
+
    // cout << a.QIntToBin()<<endl;
    // cout << b.QIntToBin()<<endl;
     //cout << "lb = " << b.QIntToBin().length()<<endl;
     //a.Output();
     cout<<endl;
-    //cout<<s.length()<<endl;
+    cout<<s.length()<<endl;
+    cout<<s2.length()<<endl;
    //cout<<a.QIntToBin();
-   cout << a.convertBinToHex()<<endl;
-    cout << b.convertBinToHex()<<endl;
+   cout << a.ConvertToDecimal()<<endl;
+    cout << b.ConvertToDecimal()<<endl;
+   cout << (a*b).ConvertToDecimal()<<endl;
+    string s3 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000001111111111110000000011111111111111111111111";
+    //cout <<"ls3 = "<< s3.length()<<endl;
+   // b.Input(ConvertStrToBin(s3, 2));
+    //cout << b.ConvertToDecimal()<<endl;
+     //cout << b.convertBinToHex()<<endl;
+    // cout << b.QIntToBin()<<endl;
     //cout << b.QIntToBin()<<endl;
     //a << 5;
     //cout << a.QIntToBin()<<endl;
-    string tich = (a*b).convertBinToHex();
-   // cout << "tich chua chuan hoa: "<< tich << endl;
-    //ChuanHoa(tich);
-    //cout << "tich da chuan hoa: "<<tich << endl;
+    // string tich = (a*b).QIntToBin();
+    // //cout << <<endl;
+    // cout << "tich chua chuan hoa: "<< tich << endl;
+    // ChuanHoa(tich);
+    // cout << "tich da chuan hoa: "<<tich << endl;
     system("pause"); 
     return 0;
 }
