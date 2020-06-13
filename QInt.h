@@ -11,7 +11,7 @@ class QInt
 private:
 	int arrayBits[4];
 public:
-QInt();
+	QInt();
 
 	//Input QInt từ một dãy nhị phân
 	void Input(string StrBin);
@@ -20,9 +20,14 @@ QInt();
 	string QIntToBin();
 	string QIntToDecimal();
 	string QIntToHex();
+	//Chuyển QInt hệ nhị phân sang hệ thập lục phân
+	string convertBinToHex();
 
-	//Dùng trong phép nhân.
-	string DiChuyenSangTrai(string StrBin, int SoBitDich);
+	//Chuyển 4 bits sang hệ thập lục phân
+	char convertBin4bitsToHex(string subStr);
+
+	//Chuyển QInt hệ thập lục phân sang hệ nhị phân
+	string convertHexToBin();
 
     int *CreateNewArrange(int *x,int count);
 
@@ -30,23 +35,19 @@ QInt();
 
     string BU2(string s);
 
-    string ConvertToDecimal(string s);
+    string ConvertToDecimal();
 
     bool check(string s1, string s2);
 
 	QInt operator=(QInt a);
-
+	
 	void operator>> (int SoBitDich);
 
 	void operator<<(int SoBitDich);
 
-	void ChuanHoa(string& s);
-
 	QInt operator*(QInt qint);
 
 	QInt operator+(QInt a);
-
-	QInt operator-(QInt a);
 
 	QInt operator&(QInt x);
 
@@ -56,11 +57,11 @@ QInt();
 
 	QInt operator~();
 
+	QInt operator-(QInt a);
+
 	QInt ROL();
 
 	QInt ROR();
 
 	QInt operator/(QInt x);
-
-	string cong(string a, string b);
 };

@@ -25,4 +25,4 @@ void ChuanHoa(string& s);
 
 //Doc file
 vector<string> ReadData(string line_info);
-string Caculator(vector<string> data);
+string Calculator(vector<string> data);

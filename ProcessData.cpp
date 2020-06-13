@@ -223,7 +223,7 @@ vector<string> ReadData(string line_info){
     return data;
 }
 
-string Caculator(vector<string> data)
+string Calculator(vector<string> data)
 {
     string result;
     int hs1=0,hs2=0;
@@ -238,14 +238,14 @@ string Caculator(vector<string> data)
         i=1;
     }
     while(i<data.size()){
-        if((data[i][0]>='0'&&data[i][0]<='9')||(data[i][0]=='-' &&data[i].length()>1)){
+        if((data[i][0]>='0'&&data[i][0]<='9')||(data[i][0]>='A'&&data[i][0]<='F')||(data[i][0]=='-' &&data[i].length()>1)){
             QInt tmp;
             tmp.Input(ConvertStrToBin(data[i],hs1));
             qInt.push_back(tmp);
         }
         else if(data[i]=="~"||data[i]=="rol"||data[i]=="ror"){
             QInt tmp;
-            string s=ConvertStrToBin(data[i],hs1);
+            string s=ConvertStrToBin(data[i+1],hs1);
             tmp.Input(s);
             if(data[i]=="~"){
                 ~tmp;
@@ -258,6 +258,7 @@ string Caculator(vector<string> data)
                 tmp=tmp.ROR();
             }
             qInt.push_back(tmp);
+            i++;
         }
         else if(data[i]=="*"||data[i]=="/"){
             int size=qInt.size()-1;
@@ -284,7 +285,8 @@ string Caculator(vector<string> data)
         }
         i++;
     }
-
+    
+    
     for(int i=0;i<pheptoan.size();i++){
         if(pheptoan[i]=="+")
             qInt[0]=qInt[0]+qInt[i+1];
@@ -296,11 +298,16 @@ string Caculator(vector<string> data)
             qInt[0]=qInt[0]|qInt[i+1];
         else 
             qInt[0]=qInt[0]^qInt[i+1];
-
-        
     }
 
     // result =qInt[0].convert(hs2) chuyen QInt thanh string minh muon xuat
-    result=qInt[0].QIntToBin();
+    if(hs2==2){
+        result=qInt[0].QIntToBin();
+        ChuanHoa(result);
+    }
+    else if(hs2==10)
+        result=qInt[0].ConvertToDecimal();
+    else
+        result=qInt[0].QIntToHex();
     return result;
 }
