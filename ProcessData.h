@@ -8,6 +8,9 @@
 
 using namespace std;
 
+int *CreateNewArrange(int *x,int count);//Tạo 1 mang dong
+bool check(string s1, string s2);// So sanh 2 chuoi
+
 // Xu ly so
 string Divide2(string s);// Chuoi so he 10 chia 2  
 string IntToStr(int num);// Chuyen doi so nguyen thanh 1 chuoi

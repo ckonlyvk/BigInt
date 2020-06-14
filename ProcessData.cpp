@@ -1,5 +1,35 @@
 #include"ProcessData.h"
 
+int* CreateNewArrange(int *x,int count)
+{
+	int*y = new int[count + 1];
+	for (int i = 0; i < count; i++)
+	{
+		y[i] = x[i];
+	}
+	y[count] = 0;
+	return y;
+}
+
+bool check(string s1, string s2)
+{
+	if (s1.length() == s2.length())
+	{
+		for (int i = 0; i < s1.length(); i++)
+		{
+			if (s1[i] - '0' > s2[i] - '0')
+			{
+				break;
+			}
+			if (s1[i] - '0' < s2[i] - '0')
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 string Divide2(string s){
     string result="";
     int tmp=0;

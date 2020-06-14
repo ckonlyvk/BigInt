@@ -137,49 +137,6 @@ string QInt::QIntToDecimal(){
 	return str;
 }
 
-int* QInt::CreateNewArrange(int *x,int count)
-{
-	int*y = new int[count + 1];
-	for (int i = 0; i < count; i++)
-	{
-		y[i] = x[i];
-	}
-	y[count] = 0;
-	return y;
-}
-
-string QInt::Check_0_in_head(string s)
-{
-	for (int i = 0; i < s.length(); i++)
-	{
-		if (s[i] - '0' == 1)
-		{
-			s = s.substr(i, s.length() - i);
-			return s;
-		}
-	}
-	return "";
-}
-
-bool QInt::check(string s1, string s2)
-{
-	if (s1.length() == s2.length())
-	{
-		for (int i = 0; i < s1.length(); i++)
-		{
-			if (s1[i] - '0' > s2[i] - '0')
-			{
-				break;
-			}
-			if (s1[i] - '0' < s2[i] - '0')
-			{
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
 QInt QInt::operator=(QInt a){
 	for(int i = 0; i < 4 ;i++){
 		this->arrayBits[i] = a.arrayBits[i];
@@ -417,8 +374,10 @@ QInt QInt::operator/(QInt x)
 	{
 		ConvertToBu2(s2);
 	}
-	s1 = Check_0_in_head(s1);
-	s2 = Check_0_in_head(s2);
+	ChuanHoa(s1);
+	ChuanHoa(s2);
+	s1=(s1!="0")?s1:"";
+	s2=(s2!="0")?s2:"";
 	if (s2.length() == 0)
 	{
 		s.push_back('0');
@@ -471,8 +430,12 @@ QInt QInt::operator/(QInt x)
 			{
 				s.push_back('0');
 			}
-			s2 = Check_0_in_head(s2);
-			s3 = Check_0_in_head(s3);
+			// s2 = Check_0_in_head(s2);
+			// s3 = Check_0_in_head(s3);
+			ChuanHoa(s2);
+			ChuanHoa(s3);
+			s2=(s2!="0")?s2:"";
+			s3=(s3!="0")?s3:"";
 		}
 	}
 	for (int i = 0; i < (128 - s.length()); i++)

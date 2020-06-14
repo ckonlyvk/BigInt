@@ -22,12 +22,6 @@ public:
 	string QIntToDecimal();
 	string QIntToHex();
 
-    int *CreateNewArrange(int *x,int count);
-
-    string Check_0_in_head(string s);
-
-    bool check(string s1, string s2);
-
 	//Cac ham operator toan tu
 	QInt operator=(QInt a);//Phep gan 
 	
