@@ -3,7 +3,7 @@
 #include <string>
 #include <math.h>
 #include <bitset>
-
+#include "ProcessData.h"
 using namespace std;
 
 class QInt
@@ -16,52 +16,42 @@ public:
 	//Input QInt từ một dãy nhị phân
 	void Input(string StrBin);
 	void Output();
+
 	//QInt sang cac he khac de tinh toan 
 	string QIntToBin();
 	string QIntToDecimal();
 	string QIntToHex();
-	//Chuyển QInt hệ nhị phân sang hệ thập lục phân
-	string convertBinToHex();
-
-	//Chuyển 4 bits sang hệ thập lục phân
-	char convertBin4bitsToHex(string subStr);
-
-	//Chuyển QInt hệ thập lục phân sang hệ nhị phân
-	string convertHexToBin();
 
     int *CreateNewArrange(int *x,int count);
 
     string Check_0_in_head(string s);
 
-    string BU2(string s);
-
-    string ConvertToDecimal();
-
     bool check(string s1, string s2);
 
-	QInt operator=(QInt a);
+	//Cac ham operator toan tu
+	QInt operator=(QInt a);//Phep gan 
 	
-	void operator>> (int SoBitDich);
+	void operator>> (int SoBitDich);//Phep dich phai 
 
-	void operator<<(int SoBitDich);
+	void operator<<(int SoBitDich);//Phep dich trai
 
-	QInt operator*(QInt qint);
+	QInt operator*(QInt qint);//Phep nhan
 
-	QInt operator+(QInt a);
+	QInt operator+(QInt a);//Phep cong
 
-	QInt operator&(QInt x);
+	QInt operator&(QInt x);//Phep and
 
-	QInt operator|(QInt x);
+	QInt operator|(QInt x);//Phep or
 
-	QInt operator^(QInt x);
+	QInt operator^(QInt x);//Phep xor
 
-	QInt operator~();
+	QInt operator~();//Phep not
 
-	QInt operator-(QInt a);
+	QInt operator-(QInt a);//Phep tru
 
-	QInt ROL();
+	QInt operator/(QInt x);//Phep chia
 
-	QInt ROR();
+	QInt ROL();//Quay trai
 
-	QInt operator/(QInt x);
+	QInt ROR();//Quay phai
 };

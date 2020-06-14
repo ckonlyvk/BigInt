@@ -1,6 +1,6 @@
 #include"ProcessData.h"
 
-string Devide2(string s){
+string Divide2(string s){
     string result="";
     int tmp=0;
     for(int i=0;i<s.length();i++){
@@ -46,7 +46,21 @@ void ConvertToBu2(string& s){
             tmp=0;
         }
     }
+}
 
+void ChuanHoa(string& s)
+{
+    int start_pos=0;
+    while(s[start_pos]=='0')
+    {
+        start_pos++;
+    }
+
+    s=s.substr(start_pos);
+
+	if (s.length() == 0){
+		s = "0";
+	}
 }
 
 int ConvertBinToDec(string s){
@@ -70,7 +84,7 @@ string ConvertDecimalToBin(string s, int szbits){
     while(s!="0"){
         int tmp=int(s[s.length()-1]-'0');
         result+=tmp%2?"1":"0";
-        s=Devide2(s);
+        s=Divide2(s);
     }
 
     int i=result.length();
@@ -180,31 +194,16 @@ string ConvertStrToBin(string s, int heso){
     }
     else{
         int sz=s.length();
-        reverse(s.begin(),s.end());
         while(sz<128){
-            s+='0';
+            result+='0';
             sz++;
         }
-        reverse(s.begin(),s.end());
-        result=s;
+        result+=s;
     }
     
     return result;
 }
-void ChuanHoa(string& s)
-{
-    int start_pos=0;
-    while(s[start_pos]=='0')
-    {
-        start_pos++;
-    }
 
-    s=s.substr(start_pos);
-
-	if (s.length() == 0){
-		s = "0";
-	}
-}
 
 
 vector<string> ReadData(string line_info){
@@ -237,6 +236,7 @@ string Calculator(vector<string> data)
         hs2=hs1;
         i=1;
     }
+    
     while(i<data.size()){
         if((data[i][0]>='0'&&data[i][0]<='9')||(data[i][0]>='A'&&data[i][0]<='F')||(data[i][0]=='-' &&data[i].length()>1)){
             QInt tmp;
@@ -263,12 +263,31 @@ string Calculator(vector<string> data)
         else if(data[i]=="*"||data[i]=="/"){
             int size=qInt.size()-1;
             QInt tmp;
-            tmp.Input(ConvertStrToBin(data[i+1],hs1));
+            int dis=2;
+            if(data[i+1]=="~"){
+                tmp.Input(ConvertStrToBin(data[i+2],hs1));
+                ~tmp;
+            }
+            else if(data[i+1]=="rol"){
+                tmp.Input(ConvertStrToBin(data[i+2],hs1));
+                tmp=tmp.ROL();
+            }
+            else if(data[i+1]=="rol")
+            {   
+                tmp.Input(ConvertStrToBin(data[i+2],hs1));
+                tmp=tmp.ROR();
+            }
+            else{
+                tmp.Input(ConvertStrToBin(data[i+1],hs1));
+                dis=1;
+            }
+            
+    
             if(data[i]=="*")
                 qInt[size]=qInt[size]*tmp;
             else 
                 qInt[size]=qInt[size]/tmp;
-            i++;
+            i+=dis;
         }
         else if(data[i]=="<<"||data[i]==">>"){
             int size=qInt.size()-1;
@@ -286,7 +305,6 @@ string Calculator(vector<string> data)
         i++;
     }
     
-    
     for(int i=0;i<pheptoan.size();i++){
         if(pheptoan[i]=="+")
             qInt[0]=qInt[0]+qInt[i+1];
@@ -300,13 +318,13 @@ string Calculator(vector<string> data)
             qInt[0]=qInt[0]^qInt[i+1];
     }
 
-    // result =qInt[0].convert(hs2) chuyen QInt thanh string minh muon xuat
+    // chuyển kết qua thanh he so mong muon
     if(hs2==2){
         result=qInt[0].QIntToBin();
         ChuanHoa(result);
     }
     else if(hs2==10)
-        result=qInt[0].ConvertToDecimal();
+        result=qInt[0].QIntToDecimal();
     else
         result=qInt[0].QIntToHex();
     return result;

@@ -1,5 +1,5 @@
 #include "QInt.h"
-#include "ProcessData.h"
+
 QInt::QInt(){
 	for(int i=0;i<4;i++){
 		arrayBits[i]=0;
@@ -11,6 +11,7 @@ void QInt::Input(string StrBin){
 	int start_pos=(end_pos - 31 < 0? 0:end_pos-32);
 	int k=3;
 	while(k>=0 && end_pos>0){
+		//Cat chuoi nhi phan thanh 32 bits va day vao tung phan tu mang int 
 		arrayBits[k]=ConvertBinToDec(StrBin.substr(start_pos,end_pos-start_pos));
 		k--;
 		end_pos=start_pos;
@@ -28,6 +29,7 @@ void QInt::Output(){
 string QInt::QIntToBin(){
 	string tmp="";
 	for(int i=0;i<4;i++){
+		//Lay tung phan tu chuyen sang nhi phan roi ghep lai thanh 1 day hoan chinh
 		tmp+=ConvertDecimalToBin(IntToStr(arrayBits[i]),32);
 	}
 	return tmp;
@@ -40,110 +42,12 @@ string QInt::QIntToHex()
 	return ConvertBinToHex(tmp);
 }
 
-char QInt::convertBin4bitsToHex(string subStr) {
-	int length = subStr.length();
-	char result = 0;
-	char t;
-
-	for (int i = 0; i < length; i++) {
-		t = subStr[length - 1 - i] - '0';
-		result += t * pow(2, i);
-	}
-	//cout << "convertBin4bitsToHex:"<<(int)result<<endl;
-
-	if (result >= 0 && result <= 9) {
-		result += 48;
-	}
-	else {
-		result = 65 + (result - 10);
-	}
-
-	return result;
-}
-
-string QInt::convertBinToHex(){
- 	string StrBin = this->QIntToBin();
-	string subStr4bits;
-	string strHex = "";
-	string temp = "";
-	int lenghtStrBin = 128;
-
-	while (lenghtStrBin > 0) {
-
-		if (lenghtStrBin < 4) {
-			subStr4bits = StrBin.substr(0, lenghtStrBin);
-		}
-		else {
-			subStr4bits = StrBin.substr(lenghtStrBin - 4, 4);
-		}
-
-		temp = convertBin4bitsToHex(subStr4bits);
-		strHex.insert(0, temp);
-
-		lenghtStrBin -= 4;
-	}
-
-	return strHex;
-}
-
-string QInt::convertHexToBin() {
-	return this->QIntToBin();
-}
-
-int* QInt::CreateNewArrange(int *x,int count)
-{
-	int*y = new int[count + 1];
-	for (int i = 0; i < count; i++)
-	{
-		y[i] = x[i];
-	}
-	y[count] = 0;
-	return y;
-}
-
-string QInt::Check_0_in_head(string s)
-{
-	for (int i = 0; i < s.length(); i++)
-	{
-		if (s[i] - '0' == 1)
-		{
-			s = s.substr(i, s.length() - i);
-			return s;
-		}
-	}
-	return "";
-}
-
-string QInt::BU2(string s)
-{
-	for (int i = s.length() - 1; i >= 0; i--)
-	{
-		if (s[i] - '0' == 1)
-		{
-			for (int j = i - 1; j >= 0; j--)
-			{
-				if (s[j] - '0' == 1)
-				{
-					s[j] = '0';
-				}
-				else
-				{
-					s[j] = '1';
-				}
-			}
-			break;
-		}
-	}
-	return s;
-}
-
-string QInt::ConvertToDecimal()
-{
+string QInt::QIntToDecimal(){
 	string s = this->QIntToBin();
 	int dau = s[0] - '0';
 	if (dau == 1)
 	{
-		s = BU2(s);
+		ConvertToBu2(s);
 	}
 
 	string str;
@@ -233,6 +137,30 @@ string QInt::ConvertToDecimal()
 	return str;
 }
 
+int* QInt::CreateNewArrange(int *x,int count)
+{
+	int*y = new int[count + 1];
+	for (int i = 0; i < count; i++)
+	{
+		y[i] = x[i];
+	}
+	y[count] = 0;
+	return y;
+}
+
+string QInt::Check_0_in_head(string s)
+{
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (s[i] - '0' == 1)
+		{
+			s = s.substr(i, s.length() - i);
+			return s;
+		}
+	}
+	return "";
+}
+
 bool QInt::check(string s1, string s2)
 {
 	if (s1.length() == s2.length())
@@ -303,7 +231,7 @@ QInt QInt::operator*(QInt qint){
 
 	kq.Input(ConvertStrToBin("0", 10));
 
-	if (this->ConvertToDecimal() == "0" || qint.ConvertToDecimal() == "0"){
+	if (this->QIntToDecimal() == "0" || qint.QIntToDecimal() == "0"){
 		this->Input(ConvertStrToBin("0", 10));
 	} else {
 
@@ -427,7 +355,8 @@ QInt QInt::operator^(QInt x)
 QInt QInt::operator-(QInt a)
 {
 	string s = a.QIntToBin();
-	a.Input(BU2(s));
+	ConvertToBu2(s);
+	a.Input(s);
 	return *this + a;
 }
 
@@ -475,8 +404,19 @@ QInt QInt::operator/(QInt x)
 	QInt KQ, element1, element2;
 	string s, s1, s2, kq;
 	string s3;
+	int dau1, dau2;
 	s1 = this->QIntToBin();
 	s2 = x.QIntToBin();
+	dau1 = s1[0] - '0';
+	dau2 = s2[0] - '0';
+	if (dau1 == 1)
+	{
+		ConvertToBu2(s1);
+	}
+	if (dau2 == 1)
+	{
+		ConvertToBu2(s2);
+	}
 	s1 = Check_0_in_head(s1);
 	s2 = Check_0_in_head(s2);
 	if (s2.length() == 0)
@@ -510,6 +450,8 @@ QInt QInt::operator/(QInt x)
 			if (s3.length() > s2.length())
 			{
 				s.push_back('1');
+				s2 = ConvertStrToBin(s2, 2);
+				s3 = ConvertStrToBin(s3, 2);
 				element1.Input(s3);
 				element2.Input(s2);
 				s3 = (element1 - element2).QIntToBin();
@@ -518,6 +460,8 @@ QInt QInt::operator/(QInt x)
 			else if (s3.length() == s2.length() && check(s3, s2) == true)
 			{
 				s.push_back('1');
+				s2 = ConvertStrToBin(s2, 2);
+				s3 = ConvertStrToBin(s3, 2);
 				element1.Input(s3);
 				element2.Input(s2);
 				s3 = (element1 - element2).QIntToBin();
@@ -527,15 +471,19 @@ QInt QInt::operator/(QInt x)
 			{
 				s.push_back('0');
 			}
+			s2 = Check_0_in_head(s2);
 			s3 = Check_0_in_head(s3);
 		}
 	}
-	
-	for (int i = 0; i <= (128 - s.length()); i++)
+	for (int i = 0; i < (128 - s.length()); i++)
 	{
 		kq.push_back('0');
 	}
 	kq = kq + s;
+	if ((dau1 == 1 && dau2 == 0) || (dau1 == 0 && dau2 == 1))
+	{
+		ConvertToBu2(kq);
+	}
 	KQ.Input(kq);
 	return KQ;
 }
